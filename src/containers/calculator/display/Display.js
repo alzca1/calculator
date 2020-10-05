@@ -1,24 +1,22 @@
-import React, {Component} from 'react'
-import ScalingText from './scalingtext/ScalingText'
-import {connect} from 'react-redux';
-import "./Display.css"
-
+import React, { Component } from "react";
+import ScalingText from "./scalingtext/ScalingText";
+import { connect } from "react-redux";
+import "./Display.css";
 
 class Display extends Component {
-    render(){
-        return(
-            <div className="Display">
-                <ScalingText value={this.props.reduxValue}/>
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className="Display">
+        <ScalingText value={this.props.reduxValue} />
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = state => {
-    console.log(state)
-    return {
-        reduxValue: state.value
-    }
-}
+const mapStateToProps = (state) => {
+  return {
+    reduxValue: state.value,
+  };
+};
 
-export default connect(mapStateToProps)(Display); 
+export default connect(mapStateToProps)(Display);

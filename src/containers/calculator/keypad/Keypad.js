@@ -9,8 +9,8 @@ class Keypad extends Component {
       <div className="Keypad">
         <div className="FunctionKeys">
           <div className="UpperKeys">
-            <Button className="UpperKey" label="AC" />
-            <Button className="UpperKey" label="+/-" />
+            <Button className="UpperKey" onClick={this.props.onACPressed} label="AC" />
+            <Button className="UpperKey" onClick = {this.props.onToggleSign} label="+/-" />
             <Button className="UpperKey" label="%" />
           </div>
           <div className="DigitKeys">
@@ -86,6 +86,8 @@ class Keypad extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onDigitPressed: (number) => dispatch({ type: "CONCATENATE", digit: number }),
+    onACPressed: () => dispatch({ type: "CLEAR"}),
+    onToggleSign: () => dispatch({type: ""})
   };
 };
 export default connect(null, mapDispatchToProps)(Keypad);
