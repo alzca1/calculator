@@ -13,7 +13,7 @@ class Keypad extends Component {
             <Button className="UpperKey" label="%" />
           </div>
           <div className="DigitKeys">
-            <Button className="DigitKey" className="key0" label="0" />
+            <Button className="DigitKey key0" label="0" />
             <Button className="DigitKey" label="." />
             <Button className="DigitKey" label="1" />
             <Button className="DigitKey" label="2" />
