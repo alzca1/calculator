@@ -1,15 +1,14 @@
-import React, {Component} from 'react'
-import "./ScalingText.css"
-
+import React, { Component } from "react";
+import "./ScalingText.css";
 
 class ScalingText extends Component {
-    render(){
-        return(
-            <div>
-               
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div className="ScalingText">
+        <div className="Text">{this.props.value}</div>
+      </div>
+    );
+  }
 }
 
-export default ScalingText; 
+export default ScalingText;
