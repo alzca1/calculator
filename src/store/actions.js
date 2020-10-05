@@ -1,0 +1,8 @@
+export const ADD = "ADD"
+export const SUBTRACT = "SUBTRACT"
+export const MULTIPLY = "MULTIPLY"
+export const DIVIDE = "DIVIDE"
+export const PERCENT = "PERCENT"
+export const CLEAR = "CLEAR"
+export const CONCATENATE = "CONCATENATE"
+export const EQUAL = "EQUAL"

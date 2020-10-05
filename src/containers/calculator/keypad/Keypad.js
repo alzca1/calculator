@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Button from "../../../components/button/button";
+import { connect } from "react-redux";
 import "./Keypad.css";
 
 class Keypad extends Component {
@@ -13,17 +14,61 @@ class Keypad extends Component {
             <Button className="UpperKey" label="%" />
           </div>
           <div className="DigitKeys">
-            <Button className="DigitKey key0" label="0" />
-            <Button className="DigitKey" label="." />
-            <Button className="DigitKey" label="1" />
-            <Button className="DigitKey" label="2" />
-            <Button className="DigitKey" label="3" />
-            <Button className="DigitKey" label="4" />
-            <Button className="DigitKey" label="5" />
-            <Button className="DigitKey" label="6" />
-            <Button className="DigitKey" label="7" />
-            <Button className="DigitKey" label="8" />
-            <Button className="DigitKey" label="9" />
+            <Button
+              className="DigitKey key0"
+              onClick={() => this.props.onDigitPressed(0)}
+              label="0"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(".")}
+              label="."
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(1)}
+              label="1"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(2)}
+              label="2"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(3)}
+              label="3"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(4)}
+              label="4"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(5)}
+              label="5"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(6)}
+              label="6"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(7)}
+              label="7"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(8)}
+              label="8"
+            />
+            <Button
+              className="DigitKey"
+              onClick={() => this.props.onDigitPressed(9)}
+              label="9"
+            />
           </div>
         </div>
         <div className="OperatorKeys">
@@ -38,4 +83,9 @@ class Keypad extends Component {
   }
 }
 
-export default Keypad;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onDigitPressed: (number) => dispatch({ type: "CONCATENATE", digit: number }),
+  };
+};
+export default connect(null, mapDispatchToProps)(Keypad);
