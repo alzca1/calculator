@@ -5,13 +5,20 @@ import "./Keypad.css";
 
 class Keypad extends Component {
   render() {
+  let displayLabel = "AC"; 
+  if(this.props.displayValue !== "0"){
+    console.log(this.props.displayValue)
+    displayLabel = "C"
+    console.log(displayLabel)
+  }
     return (
+      
       <div className="Keypad">
         <div className="FunctionKeys">
           <div className="UpperKeys">
-            <Button className="UpperKey" onClick={this.props.onACPressed} label="AC" />
+            <Button className="UpperKey" onClick={this.props.onACPressed} label={displayLabel} />
             <Button className="UpperKey" onClick = {this.props.onToggleSign} label="+/-" />
-            <Button className="UpperKey" label="%" />
+            <Button className="UpperKey" onClick={this.props.onAddingPercent}label="%" />
           </div>
           <div className="DigitKeys">
             <Button
@@ -21,7 +28,7 @@ class Keypad extends Component {
             />
             <Button
               className="DigitKey"
-              onClick={() => this.props.onDigitPressed(".")}
+              onClick={this.props.onPeriodPressed}
               label="."
             />
             <Button
@@ -72,22 +79,32 @@ class Keypad extends Component {
           </div>
         </div>
         <div className="OperatorKeys">
-          <Button className="OperatorKey" label="÷" />
-          <Button className="OperatorKey" label="x" />
-          <Button className="OperatorKey" label="-" />
-          <Button className="OperatorKey" label="+" />
-          <Button className="OperatorKey" label="=" />
+          <Button className="OperatorKey"  onClick={() => this.props.onOperatorPressed("/")} label="÷" />
+          <Button className="OperatorKey"  onClick={() => this.props.onOperatorPressed("*")} label="x" />
+          <Button className="OperatorKey"  onClick={() => this.props.onOperatorPressed("-")} label="-" />
+          <Button className="OperatorKey"  onClick={() => this.props.onOperatorPressed("+")} label="+" />
+          <Button className="OperatorKey"  onClick={() => this.props.onOperatorPressed("=")} label="=" />
         </div>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    value: state.value, 
+    displayValue: state.displayValue
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    onDigitPressed: (number) => dispatch({ type: "CONCATENATE", digit: number }),
+    onDigitPressed: (number) => dispatch({ type: "INPUTDIGIT", digit: number }),
+    onPeriodPressed: () => dispatch({type:"PERIOD"}), 
     onACPressed: () => dispatch({ type: "CLEAR"}),
-    onToggleSign: () => dispatch({type: ""})
+    onToggleSign: () => dispatch({type: "TOGGLESIGN"}), 
+    onAddingPercent: () => dispatch({type: "PERCENT"}), 
+    onOperatorPressed: (operator) => dispatch({type: "OPERATOR", symbol: operator})
   };
 };
-export default connect(null, mapDispatchToProps)(Keypad);
+export default connect(mapStateToProps, mapDispatchToProps)(Keypad);

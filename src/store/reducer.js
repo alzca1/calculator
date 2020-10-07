@@ -1,60 +1,122 @@
 import * as actionTypes from "./actions";
 
 const initialState = {
-  value: "0",
-  pendingOperation: false,
+  value: null,
+  displayValue: "0",
+  pendingOperand: false,
+  symbol: null,
 };
 
-const onConcatenate = (state, digit) => {
-  const { value } = state;
-  let nextValue = null;
-
-  if (value !== "0") {
-    nextValue = value + String(digit);
-  }
-  if (value === "0") {
-    nextValue = String(digit);
-  }
-
-  if (value.includes(".") && digit === ".") {
+const onInputDigit = (state, digit) => {
+  const { displayValue, pendingOperand } = state;
+  if (pendingOperand) {
     return {
       ...state,
+      displayValue: String(digit),
+      pendingOperand: false,
+    };
+  } else {
+    return {
+      ...state,
+      displayValue: displayValue === "0" ? String(digit) : displayValue + digit,
     };
   }
-  return {
-    ...state,
-    value: nextValue,
-  };
+};
+
+const onAddPeriod = (state) => {
+  const { displayValue } = state;
+  if (displayValue.indexOf(".") === -1) {
+    return {
+      ...state,
+      displayValue: displayValue + ".",
+    };
+  }
+  return state;
 };
 
 const onClearDisplay = (state) => {
   return {
     ...state,
-    value: "0",
+    displayValue: "0",
+    value: null
   };
 };
 
 const onToggleSign = (state) => {
-  console.log("hello")
-  const { value } = state;
-  let nextValue = null;
-  value.charAt(0) === "-"
-    ? (nextValue = value.slice(0, 1))
-    : (nextValue = "-" + value);
+  const { displayValue } = state;
   return {
     ...state,
-    value: nextValue,
+    displayValue:
+      displayValue.charAt(0) === "-"
+        ? displayValue.substr(1)
+        : "-" + displayValue,
   };
+};
+
+const onAddPercentage = (state) => {
+  const { displayValue } = state;
+  const newValue = parseFloat(displayValue) / 100;
+
+  return {
+    ...state,
+    displayValue: newValue,
+  };
+};
+
+const onOperating = (state, nextSymbol) => {
+  const { displayValue, symbol, value } = state;
+
+  const nextValue = parseFloat(displayValue);
+
+  const operations = {
+    "+": (previousValue, nextValue) => previousValue + nextValue,
+    "-": (previousValue, nextValue) => previousValue - nextValue,
+    "*": (previousValue, nextValue) => previousValue * nextValue,
+    "/": (previousValue, nextValue) => previousValue / nextValue,
+    "=": (previousValue, nextValue) => nextValue
+  };
+
+  if (value === null) {
+   
+    return {
+      ...state,
+      value: nextValue,
+      pendingOperand: true, 
+      symbol: nextSymbol
+    };
+  }
+  
+
+  if (symbol) {
+    const currentValue = value || 0;
+    const newValue = operations[symbol](currentValue, nextValue);
+
+    return {
+      ...state,
+      value: newValue,
+      displayValue: String(newValue),
+      pendingOperand: true, 
+      symbol: nextSymbol
+    };
+  }
+
+
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.CONCATENATE:
-      return onConcatenate(state, action.digit);
+    case actionTypes.INPUTDIGIT:
+      return onInputDigit(state, action.digit);
+    case actionTypes.PERIOD:
+      return onAddPeriod(state);
     case actionTypes.CLEAR:
       return onClearDisplay(state);
     case actionTypes.TOGGLESIGN:
       return onToggleSign(state);
+    case actionTypes.PERCENT:
+      return onAddPercentage(state);
+    case actionTypes.OPERATOR:
+      return onOperating(state, action.symbol);
     default:
       return state;
   }

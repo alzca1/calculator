@@ -1,12 +1,11 @@
 .ScalingText {
   position: relative;
-  font-size: 4em;
+  font-size: 1em;
   color: white;
 }
 
 .Text {
   position: absolute;
   right: 0;
-  
   padding: 55px 5px 25px 0; 
 }
