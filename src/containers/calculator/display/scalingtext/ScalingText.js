@@ -37,8 +37,7 @@ class ScalingText extends Component {
       padding: "45px 5px 55px 10px",
       transform: `scale(${scale}, ${scale})`,
       transformOrigin: "right",
-      display: "inline-block",
-      border: "1px solid red",
+      display: "inline-block"
     };
     return (
       <div className="ScalingText" {...this.props}>
