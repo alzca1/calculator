@@ -7,7 +7,6 @@ class Display extends Component {
   render() {
     return (
       <div className="Display">
-        <pre>{JSON.stringify(this.props.state, null, 2)}</pre>
         <ScalingText value={this.props.reduxValue} />
       </div>
     );
