@@ -35,11 +35,21 @@ const onAddPeriod = (state) => {
 };
 
 const onClearDisplay = (state) => {
-  return {
-    ...state,
-    displayValue: "0",
+  const {displayValue}  = state; 
+
+  if(displayValue !== "0"){
+    return {
+      ...state,
+      displayValue: "0",
+    };
+  }
+
+  return{
+    ...state, 
+    displayValue: "0", 
     value: null
-  };
+  }
+  
 };
 
 const onToggleSign = (state) => {
